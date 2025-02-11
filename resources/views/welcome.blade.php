@@ -5,8 +5,8 @@
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vite App</title>
-    <script type="module" crossorigin src="{{mix("dist/assets/index-DazGOZzf.js")}}"></script>
-    <link rel="stylesheet" crossorigin href="{{mix("dist/assets/index-Bri04EVo.css")}}">
+    <script type="module" crossorigin src="{{asset("dist/assets/index-DazGOZzf.js")}}"></script>
+    <link rel="stylesheet" crossorigin href="{{asset("dist/assets/index-Bri04EVo.css")}}">
   </head>
   <body>
     <div id="app"></div>
