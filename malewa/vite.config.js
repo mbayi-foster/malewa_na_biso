@@ -11,6 +11,9 @@ export default defineConfig({
     vueJsx(),
     vueDevTools(),
   ],
+  build: {
+    outDir: '../public/build/', // Spécifiez le nouveau dossier de sortie ici
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
