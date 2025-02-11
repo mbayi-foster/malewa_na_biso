@@ -1,93 +1,99 @@
 <script setup>
-import DataTable from 'datatables.net-vue3';
-import DataTablesCore from 'datatables.net';
+import { ref, onMounted } from 'vue'
+import Users from "@/api/users"
 
-DataTable.use(DataTablesCore);
+const users = ref()
 
-const data = [
-    [1, 2],
-    [3, 4],
-    [3, 4],
-    [3, 4],
-    [3, 4],
-    [3, 4],
-    [3, 4],
-    [3, 4],
-    [3, 4],
-    [3, 4],
-    [3, 4],
-    [3, 4],
-    [3, 4],
-    [3, 4],
-    [3, 4],
-    [3, 4],
-    [3, 4],
-];
-const tableOptions = {
-    paging: true,
-    searching: true,
-    ordering: true,
-    pageLength: 10,
-}
+async onMounted(() => {
+    try {
+        this.users = await Users.getAll('/items'); // Remplacez par votre ressource
+    } catch (error) {
+        console.error('Erreur lors du chargement des éléments:', error);
+    }
+})
 </script>
 
 <template>
-    <div class="mx-5">
-        <DataTable :data="data" :options="tableOptions"
-            class="display w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <!--  <th scope="col" class="p-4">
-                        <div class="flex items-center">
-                            <input id="checkbox-all-search" type="checkbox"
-                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                        </div>
-                    </th> -->
                     <th scope="col" class="px-6 py-3">
-                        Price
+                        #
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Nom
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Contact
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Statistiques
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Action
                     </th>
                 </tr>
             </thead>
-        </DataTable>
+            <tbody v-for="(item, index) in users">
+                <tr
+                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ index + 1 }}
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ item.prenom }} {{ item.nom }}
+                    </td>
+                    <td class="px-6 py-4">
+                        <p>{{ item.email }}</p>
+                        <p>{{ item.phone }}</p>
+                    </td>
+                    <td class="px-6 py-4">
+                        $2999
+                    </td>
+                    <td class="px-6 py-4">
+                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
+            aria-label="Table navigation">
+            <span
+                class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing
+                <span class="font-semibold text-gray-900 dark:text-white">1-10</span> of <span
+                    class="font-semibold text-gray-900 dark:text-white">1000</span></span>
+            <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                <li>
+                    <a href="#"
+                        class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+                </li>
+                <li>
+                    <a href="#" aria-current="page"
+                        class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                </li>
+            </ul>
+        </nav>
     </div>
+
 </template>
-<style>
-@import 'datatables.net-dt';
-
-/* Styles pour le tableau */
-.dataTable {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-.dataTable th,
-.dataTable td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #e2e8f0;
-    /* Couleur des bordures */
-}
-
-.dataTable th {
-    background-color: #f7fafc;
-    /* Couleur d'arrière-plan des en-têtes */
-    font-weight: 600;
-    /* Gras */
-    color: #2d3748;
-    /* Couleur du texte */
-}
-
-.dataTable tr:hover {
-    background-color: #edf2f7;
-    /* Couleur de survol des lignes */
-}
-
-.dataTable .dataTables_wrapper {
-    padding: 20px;
-    /* Espace autour du tableau */
-}
-</style>
