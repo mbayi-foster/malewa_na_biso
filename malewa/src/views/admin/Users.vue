@@ -1,19 +1,28 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import Users from "@/api/users"
+import BreadCumb from '@/components/BreadCumb.vue';
 
-const users = ref()
+const users = ref([])
 
-async onMounted(() => {
+const fetchItems = async () => {
     try {
-        this.users = await Users.getAll('/items'); // Remplacez par votre ressource
+        users.value = await Users.getAll('/users');
+        console.log(users.value) // Remplacez par votre ressource
     } catch (error) {
         console.error('Erreur lors du chargement des éléments:', error);
     }
-})
+};
+
+onMounted(fetchItems)
+
 </script>
 
 <template>
+    <div class="mb-3">
+        <BreadCumb lien="/" page="Utilisateurs" hote="Adminstration" />
+
+    </div>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

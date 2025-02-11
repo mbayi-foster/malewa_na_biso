@@ -89,6 +89,10 @@
                                         class="block px-4 py-2 hover:bg-yellow-200 dark:hover:bg-gray-600 dark:hover:text-white">Utilisateurs</a>
                                 </li>
                                 <li>
+                                    <a href="/users/create"
+                                        class="block px-4 py-2 hover:bg-yellow-200 dark:hover:bg-gray-600 dark:hover:text-white">Nouvel utilisateur</a>
+                                </li>
+                                <li>
                                     <a href="#"
                                         class="block px-4 py-2 hover:bg-yellow-200 dark:hover:bg-gray-600 dark:hover:text-white">Configurations</a>
                                 </li>
