@@ -2,9 +2,13 @@
 import { ref, onMounted } from 'vue'
 import Users from "@/api/users"
 import BreadCumb from '@/components/BreadCumb.vue';
-
+import Table from '@/components/Table.vue';
 const users = ref([])
-
+const tableColumns = [
+  { key: 'nom', label: 'Nom' },
+  { key: 'email', label: 'Email' },
+  // Ajoutez d'autres colonnes ici
+];
 const fetchItems = async () => {
     try {
         users.value = await Users.getAll('/users');
@@ -22,7 +26,7 @@ onMounted(fetchItems)
     <div class="mb-3">
         <BreadCumb lien="/" page="Utilisateurs" hote="Adminstration" />
     </div>
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+   <!--  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -103,6 +107,6 @@ onMounted(fetchItems)
                 </li>
             </ul>
         </nav>
-    </div>
-
+    </div> -->
+    <Table :data="users" :items-per-page="7" :columns="tableColumns"/>
 </template>
