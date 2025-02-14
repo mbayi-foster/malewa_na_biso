@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('configs', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->string('code');
-            $table->boolean('status')->default(true);
-            $table->string('details');
+            $table->unsignedBigInteger('depot');
+            $table->foreign('depot')->references('id')->on('depots');
+            $table->string('message');
+            $table->boolean('is_read')->default(false);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('configs');
+        Schema::dropIfExists('notifications');
     }
 };

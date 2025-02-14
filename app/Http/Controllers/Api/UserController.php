@@ -22,7 +22,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::create(
+            [
+                "nom" => $request->nom,
+                "prenom" => $request->prenom,
+                "email" => $request->email,
+                "to_paye" => $request->to_paye,
+                "password"=>"123456"
+            ]
+        );
+
+        if($user){
+            return response()->json(true);
+        }
+
+        return response()->json($request, 200);
     }
 
     /**

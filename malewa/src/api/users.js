@@ -21,7 +21,7 @@ class Users {
     }
   }
 
-  async post(resource, data) {
+  async store(resource, data) {
     try {
       const response = await this.api.post(resource, data);
       return response.data;

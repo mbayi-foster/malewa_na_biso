@@ -25,7 +25,8 @@ class User extends Authenticatable
         'payed',
         'to_paye',
         'status',
-        'password'
+        'password',
+        'photo',
     ];
 
     /**
@@ -49,5 +50,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class, 'user_role','role_id','id');
+    }
+
+    public function depots(){
+        return $this->hasMany(Depot::class, 'partenaire','id');
     }
 }

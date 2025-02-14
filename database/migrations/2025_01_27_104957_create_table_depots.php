@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('depots', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('part');
-            $table->foreign('part')->references('id')->on('users');
+            $table->unsignedBigInteger('partenaire');
+            $table->foreign('partenaire')->references('id')->on('users');
             $table->float('montant');
-            $table->string('ref');
-            $table->boolean('status_pdg')->default(false);
-            $table->boolean('status_caisse')->default(false);
+            $table->string('ref')->unique();
+            $table->boolean('pdg')->default(false);
+            $table->boolean('comptable')->default(false);
             $table->string('photo');
             $table->timestamp("date_depot");
             $table->timestamps();

@@ -17,13 +17,12 @@ class UserSeeders extends Seeder
     {
            
         $faker = Faker::create();
-        $matricules = "089356";
         for ($i = 0; $i < 40; $i++) {
-            $matricule = $matricules . $i;
             ModelsUser::create([
                 'nom' => $faker->name,
-                'prenom' => $faker->name,
                 'email' => $faker->email,
+                'phone'=>  $faker->phoneNumber,
+                'to_paye'=> 3000000,
                 'password' => bcrypt('123456')
             ]);
         }

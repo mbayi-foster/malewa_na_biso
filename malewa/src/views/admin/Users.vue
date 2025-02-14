@@ -21,7 +21,6 @@ onMounted(fetchItems)
 <template>
     <div class="mb-3">
         <BreadCumb lien="/" page="Utilisateurs" hote="Adminstration" />
-
     </div>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -58,7 +57,8 @@ onMounted(fetchItems)
                         <p>{{ item.phone }}</p>
                     </td>
                     <td class="px-6 py-4">
-                        $2999
+                       <p>{{ item.to_paye }} FC</p>
+                       <p>{{ item.payed }} FC</p>
                     </td>
                     <td class="px-6 py-4">
                         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
