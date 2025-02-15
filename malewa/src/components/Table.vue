@@ -1,11 +1,4 @@
 <template>
-    <div>
-        <button @click="prevPage" :disabled="currentPage === 1">Précédent</button>
-        <button @click="nextPage" :disabled="currentPage === totalPages">Suivant</button>
-    </div>
-
-
-
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div class="pb-4 bg-white dark:bg-gray-900">
             <label for="table-search" class="sr-only">Search</label>
@@ -27,13 +20,41 @@
                 <tr>
                     <th v-for="column in columns" :key="column.key" scope="col" class="px-6 py-3">
                         {{ column.label }}
-                        <input v-model="filters[column.key]" placeholder="Filtre" />
+                        <!--     <input type="text" id="table-search" v-model="filters[column.key]" placeholder="Filtre"
+                            v-if="column.filter"
+                            class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                           <input v-model="filters[column.key]" placeholder="Filtre" v-if="column.filter"
+                          class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                  -->
+                    </th>
+                    <th>
+                        Actions
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="item in paginatedData" :key="item.id" scope="row" class="px-6 py-4 ">
-                    <td v-for="column in columns" :key="column.key">{{ item[column.key] }}</td>
+                    <td v-for="column in columns" :key="column.key">
+                        <div v-if="column.key != 'email' && column.key != 'nom'">
+                            {{ item[column.key] }}
+                        </div>
+                        <div v-if="column.key == 'email'">
+                            <p> {{ item[column.key] }}</p>
+                            <p>
+                                {{ item['phone'] }}
+                            </p>
+                        </div>
+                        <div v-if="column.key == 'nom'">
+                            {{ item['prenom'] }} {{ item[column.key] }}
+                        </div>
+                        <!-- <div v-if="column.key=='prenom'">
+                            <p>
+                                {{ item['prenom'] }}
+                            </p>
+                        </div> -->
+                    </td>
+                    <td>edit</td>
+
                 </tr>
             </tbody>
         </table>
@@ -66,21 +87,21 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 
 const props = defineProps({
-  data: {
-    type: Array,
-    required: true,
-  },
-  columns: {
-    type: Array,
-    required: true,
-  },
-  itemsPerPage: {
-    type: Number,
-    default: 10,
-  },
+    data: {
+        type: Array,
+        required: true,
+    },
+    columns: {
+        type: Array,
+        required: true,
+    },
+    itemsPerPage: {
+        type: Number,
+        default: 10,
+    },
 });
 
 const currentPage = ref(1);
@@ -88,18 +109,18 @@ const filters = ref({});
 const searchQuery = ref('');
 
 const filteredData = computed(() => {
-  return props.data.filter(item => {
-    return Object.keys(filters.value).every(key => {
-      return item[key]
-        .toString()
-        .toLowerCase()
-        .includes(filters.value[key].toLowerCase());
+    return props.data.filter(item => {
+        const filteredBySearch = Object.values(item).some(value => {
+            return value !== null && value.toString().toLowerCase().includes(searchQuery.value.toLowerCase())
+        }
+        );
+        const filteredByFilters = Object.keys(filters.value).every(key => {
+            return !filters.value[key] || item[key].toString().toLowerCase().includes(filters.value[key].toLowerCase());
+        });
+
+        return filteredBySearch && filteredByFilters;
+        //  return item
     });
-  }).filter(item => {
-    return Object.values(item).some(value => 
-      value.toString().toLowerCase().includes(searchQuery.value.toLowerCase())
-    );
-  });
 });
 
 const totalItems = computed(() => filteredData.value.length);
@@ -109,39 +130,42 @@ const startIndex = computed(() => (currentPage.value - 1) * props.itemsPerPage +
 const endIndex = computed(() => Math.min(currentPage.value * props.itemsPerPage, totalItems.value));
 
 const paginatedData = computed(() => {
-  const start = (currentPage.value - 1) * props.itemsPerPage;
-  return filteredData.value.slice(start, start + props.itemsPerPage);
+    const start = (currentPage.value - 1) * props.itemsPerPage;
+    return filteredData.value.slice(start, start + props.itemsPerPage);
 });
 
 const totalPagesArray = computed(() => Array.from({ length: totalPages.value }, (_, i) => i + 1));
 
 const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
-    currentPage.value++;
-  }
+    if (currentPage.value < totalPages.value) {
+        currentPage.value++;
+    }
 };
 
 const prevPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value--;
-  }
+    if (currentPage.value > 1) {
+        currentPage.value--;
+    }
 };
 
 const goToPage = (page) => {
-  currentPage.value = page;
+    currentPage.value = page;
 };
 </script>
 
 <style scoped>
 table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
 }
+
 th {
-  background-color: #f2f2f2;
+    background-color: #f2f2f2;
 }
 </style>

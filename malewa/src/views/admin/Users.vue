@@ -5,14 +5,15 @@ import BreadCumb from '@/components/BreadCumb.vue';
 import Table from '@/components/Table.vue';
 const users = ref([])
 const tableColumns = [
-  { key: 'nom', label: 'Nom' },
-  { key: 'email', label: 'Email' },
-  // Ajoutez d'autres colonnes ici
+    { key: 'nom', label: 'Nom' },
+    { key: 'email', label: 'Email' },
+    { key: 'to_paye', label: 'A payer' },
+    { key: 'payed', label: 'Déjà payé' },
+    // Ajoutez d'autres colonnes ici
 ];
 const fetchItems = async () => {
     try {
         users.value = await Users.getAll('/users');
-        console.log(users.value) // Remplacez par votre ressource
     } catch (error) {
         console.error('Erreur lors du chargement des éléments:', error);
     }
@@ -26,7 +27,7 @@ onMounted(fetchItems)
     <div class="mb-3">
         <BreadCumb lien="/" page="Utilisateurs" hote="Adminstration" />
     </div>
-   <!--  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <!--  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -108,5 +109,5 @@ onMounted(fetchItems)
             </ul>
         </nav>
     </div> -->
-    <Table :data="users" :items-per-page="7" :columns="tableColumns"/>
+    <Table :data="users" :items-per-page="7" :columns="tableColumns" />
 </template>

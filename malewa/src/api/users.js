@@ -15,7 +15,6 @@ class Users {
     try {
       const response = await this.api.get(resource);
       return response.data;
-      console.log("la reponse est ", response)
     } catch (error) {
       this.handleError(error);
     }
