@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('partenaire');
             $table->foreign('partenaire')->references('id')->on('users');
             $table->float('montant');
-            $table->string('ref')->unique();
+            $table->string('ref');
             $table->boolean('pdg')->default(false);
             $table->boolean('comptable')->default(false);
             $table->string('photo');
