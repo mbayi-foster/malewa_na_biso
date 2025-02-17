@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import Users from '@/api/users'
+import Users from '@/api/api'
 import BreadCumb from '@/components/BreadCumb.vue'
 import Table from '@/components/tables/TableUsers.vue'
 const users = ref([])

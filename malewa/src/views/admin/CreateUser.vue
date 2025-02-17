@@ -99,7 +99,7 @@
 import BreadCumb from '@/components/BreadCumb.vue'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
-import Users from '@/api/users'
+import Users from '@/api/api'
 
 const router = useRouter()
 const user = ref({
@@ -129,6 +129,5 @@ const handleSubmit = async () => {
     msg.value = error.response.data.message
     console.error('Erreur lors du chargement des éléments:', error.response.data.message)
   }
- 
 }
 </script>

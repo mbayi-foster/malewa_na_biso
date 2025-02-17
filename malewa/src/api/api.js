@@ -1,7 +1,7 @@
 // src/services/ApiService.js
 import axios from 'axios'
 
-class Users {
+class Api {
   constructor(baseURL) {
     this.api = axios.create({
       baseURL: baseURL,
@@ -55,4 +55,4 @@ class Users {
   }
 }
 
-export default new Users('http://localhost:8000/api') // Remplacez par votre URL de base
+export default new Api('http://localhost:8000/api') // Remplacez par votre URL de base

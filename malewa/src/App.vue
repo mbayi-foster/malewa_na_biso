@@ -12,7 +12,6 @@ const calcule = () => {
   userStore.loadUser()
   user.value = userStore.user
   isConnected.value = userStore.isAuthenticated
-  console.log('utilisateurs', user)
 }
 onMounted(calcule)
 computed(calcule)

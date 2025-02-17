@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import Users from '@/api/users'
+import Users from '@/api/api'
 import { useUserStore } from '@/stores/store'
 import { useRouter } from 'vue-router'
 
@@ -27,7 +27,7 @@ const handleSubmit = async () => {
     router.push('/home')
   } catch (error) {
     msg.value = true
-    load.value= false
+    load.value = false
     console.error('Erreur lors du chargement des éléments:', error)
   }
 }
@@ -47,7 +47,8 @@ const handleSubmit = async () => {
         Veillez entrer vos données pour se connecter
       </p>
     </div>
-    <div v-if="msg"
+    <div
+      v-if="msg"
       id="alert-2"
       class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
       role="alert"
